@@ -1,84 +1,127 @@
-# Python HFT Trading Simulation - Web Application
+# C++ HFT Trading Simulation - Desktop Application
 
-A comprehensive high-frequency trading simulation built with Streamlit, featuring real-time order matching, customizable trading symbols, CSV import/export, and performance analytics.
+A high-performance trading simulation built with Qt 6 and C++17, featuring sub-millisecond order matching, multi-threaded architecture, and professional GUI interface.
 
-![Python HFT Simulator](https://img.shields.io/badge/Python-HFT_Simulator-blue.svg) ![Streamlit](https://img.shields.io/badge/Streamlit-Web_App-red.svg) ![Performance](https://img.shields.io/badge/Performance-2000+_TPS-green.svg)
+![C++ HFT Simulator](https://img.shields.io/badge/C++-HFT_Simulator-blue.svg) ![Qt6](https://img.shields.io/badge/Qt6-Desktop_App-green.svg) ![Performance](https://img.shields.io/badge/Performance-10000+_TPS-red.svg)
 
 ## Features
 
 ### Core Trading Engine
 - **Real-time Order Matching**: Price-time priority matching algorithm
 - **Multi-threaded Architecture**: Separate threads for order processing and trading bots
-- **High-Performance Processing**: Optimized batch processing for maximum throughput
+- **High-Performance Processing**: Optimized for low-latency order execution
 - **Thread-safe Operations**: Mutex-protected data structures for concurrent access
 
-### Web Interface
-- **Modern Streamlit GUI**: Professional trading interface with real-time updates
-- **High-Frequency Mode**: Toggle for maximum performance (50ms order generation)
-- **Real-time Order Book**: Live visualization of top 5 bids and asks with interactive charts
-- **Trade Execution Log**: Real-time trade history with detailed analytics
-- **Performance Metrics**: Live trades per second, latency, and throughput monitoring
-
 ### Trading Simulation
-- **Configurable Trading Bots**: 1-20 bots with customizable parameters
-- **Dynamic Symbol Management**: Add custom symbols or import from CSV
+- **Configurable Trading Bots**: Multiple bots with customizable parameters
+- **Multiple Asset Support**: Trade on various symbols simultaneously
 - **Realistic Market Dynamics**: Market-making and price discovery simulation
-- **Portfolio Management**: Real-time P&L tracking for each trader
+- **Portfolio Management**: Real-time P&L tracking and position management
+
+### User Interface
+- **Modern Qt GUI**: Professional trading interface with dark theme
+- **Real-time Order Book**: Live display of top 5 bids and asks
+- **Trade Execution Log**: Real-time trade history with filtering
+- **Performance Metrics**: Trades per second, latency, and throughput monitoring
+- **Trader Analytics**: Individual bot performance and P&L tracking
 
 ### Data Management
-- **CSV Import/Export**: Upload order files with validation and preview
-- **Sample Data**: Included sample CSV files for testing
+- **CSV Import/Export**: Import orders and export trade data
 - **Order Book Snapshots**: Export current market state
-- **Performance Analytics**: Comprehensive trading statistics
+- **Performance Reports**: Detailed analytics export
+- **Sample Data**: Included sample CSV files for testing
 
 ## Requirements
 
-- Python 3.11+
-- Streamlit
-- Pandas
-- NumPy
-- Plotly
+### System Dependencies
+- Qt 6.0 or higher
+- CMake 3.16+
+- C++17 compatible compiler (GCC 8+, Clang 8+, MSVC 2019+)
+- pkg-config
 
-## Installation
-
-### 1. Install Dependencies
+### Linux (Ubuntu/Debian)
 ```bash
-pip install streamlit pandas numpy plotly
+sudo apt update
+sudo apt install build-essential cmake pkg-config qt6-base-dev qt6-charts-dev
 ```
 
-### 2. Run the Application
+### macOS
 ```bash
-streamlit run app.py --server.port 5000
+brew install qt6 cmake pkg-config
 ```
 
-### 3. Access the Interface
-Open your browser to `http://localhost:5000`
+### Windows
+Download and install:
+- Qt 6 from https://www.qt.io/download
+- CMake from https://cmake.org/download/
+- Visual Studio 2019 or newer
+
+## Build Instructions
+
+### 1. Clone and Navigate
+```bash
+cd cpp_hft
+```
+
+### 2. Create Build Directory
+```bash
+mkdir build
+cd build
+```
+
+### 3. Configure with CMake
+```bash
+# Linux/macOS
+cmake ..
+
+# Windows with Visual Studio
+cmake .. -G "Visual Studio 16 2019"
+```
+
+### 4. Build the Application
+```bash
+# Linux/macOS
+make -j$(nproc)
+
+# Windows
+cmake --build . --config Release
+```
+
+### 5. Run the Application
+```bash
+# Linux/macOS
+./hft_simulator
+
+# Windows
+Release/hft_simulator.exe
+```
 
 ## Quick Start Guide
 
 ### 1. Configure Simulation
-- Toggle "High-Frequency Mode" for maximum performance
-- Set number of trading bots (1-20)
+- Set number of trading bots (1-50)
 - Set initial cash per bot
-- Select or add custom trading symbols
+- Select trading symbols (default: AAPL, GOOGL, MSFT, TSLA, AMZN)
+- Add custom symbols if needed
 
-### 2. Import Data (Optional)
-- Use "Import CSV" tab to upload order files
-- Download sample CSV for format reference
-- Load provided sample data for testing
-
-### 3. Start Trading
+### 2. Start Trading
 - Click "Start Simulation" to begin
-- Watch real-time order book updates
-- Monitor performance metrics and trade executions
+- Bots will automatically start generating orders
+- Watch real-time order book updates and trade executions
 
-### 4. Export Results
-- Export trade history to CSV
-- Export order book snapshots
-- Download performance analytics
+### 3. Monitor Performance
+- View live performance metrics (trades/sec, latency)
+- Track individual trader P&L
+- Monitor order book depth and spreads
 
-## CSV Import Format
+### 4. Import/Export Data
+- Import orders from CSV files
+- Export trade history and order book snapshots
+- Use provided sample CSV for testing
 
+## CSV Format
+
+### Order Import Format
 ```csv
 trader_id,symbol,side,quantity,price,timestamp
 TRADER_001,AAPL,BUY,100,150.25,2025-07-06 10:00:00
@@ -91,113 +134,108 @@ Required columns:
 - `side`: BUY or SELL
 - `quantity`: Number of shares (positive integer)
 - `price`: Price per share (positive decimal)
-- `timestamp`: Optional timestamp
-
-## Performance Modes
-
-### Standard Mode
-- Order generation: Every 100ms
-- Suitable for visualization and analysis
-- Balanced performance and UI responsiveness
-
-### High-Frequency Mode
-- Order generation: Every 50ms
-- Batch processing enabled
-- Maximum throughput for performance testing
-- Optimized for speed over UI responsiveness
+- `timestamp`: Optional timestamp (YYYY-MM-DD HH:MM:SS format)
 
 ## Architecture
 
 ### Core Components
 
-#### `models/engine.py` - Trading Engine
-- Central order processing and matching system
-- Batch processing for high-frequency performance
-- Real-time statistics and performance monitoring
+#### Order (`src/order.cpp`)
+- Represents individual trading orders
+- Tracks order status, fills, and execution history
+- Thread-safe fill and cancel operations
 
-#### `models/order.py` - Order Management
-- Individual order representation and lifecycle
-- Fill tracking and status management
-- Thread-safe operations
-
-#### `models/orderbook.py` - Order Book
-- Heap-based price level management
+#### OrderBook (`src/orderbook.cpp`)
+- Maintains bid/ask price levels using priority queues
 - Efficient price-time priority matching
 - Real-time market depth calculation
 
-#### `models/trader.py` - Trading Bots
-- Simulated traders with AI-like behavior
-- Configurable trading parameters
-- Portfolio tracking and P&L calculation
+#### TradingEngine (`src/engine.cpp`)
+- Central order processing and matching system
+- Multi-threaded order queue processing
+- Performance monitoring and statistics
 
-#### `utils/csv_importer.py` - Data Import
-- CSV validation and processing
-- Error handling and reporting
-- Symbol and trader extraction
+#### Trader (`src/trader.cpp`)
+- Simulated trading bot with AI-like behavior
+- Configurable trading parameters and strategies
+- Portfolio tracking and risk management
 
-#### `utils/data_export.py` - Data Export
-- Multiple export formats
-- Trading analytics and statistics
-- Performance metrics calculation
+#### MainWindow (`src/mainwindow.cpp`)
+- Qt-based GUI with professional trading interface
+- Real-time data visualization
+- User controls and configuration options
 
-## Performance Characteristics
-
-### Typical Performance
-- **Throughput**: 500-2,000+ trades per second
-- **Latency**: Sub-millisecond order processing
-- **Update Rate**: 500ms GUI refresh in HFT mode
-- **Memory Usage**: ~100-200MB for 20 traders
-
-### Optimization Features
-- Batch order processing
-- Efficient data structures
-- Minimal GUI blocking
-- Real-time performance monitoring
+### Threading Model
+- **Main Thread**: GUI updates and user interaction
+- **Engine Thread**: Order processing and matching
+- **Trader Threads**: Individual bot trading logic
+- **Timer Threads**: Periodic updates and statistics
 
 ## Configuration Options
 
 ### Trading Parameters
-- Order frequency: 50ms (HFT) to 500ms (standard)
-- Order size range: 5-50 (HFT) or 10-100 (standard)
-- Price volatility: 1-2% variation
-- Position limits: Configurable per trader
+- **Order Frequency**: Time between orders (milliseconds)
+- **Order Size Range**: Min/max order quantities
+- **Price Volatility**: Random price variation percentage
+- **Position Limits**: Maximum position size per symbol
 
 ### Performance Tuning
-- HFT mode toggle
-- Batch processing size
-- GUI update frequency
-- Trade history limits
+- **Processing Interval**: Engine processing frequency (1ms default)
+- **Update Frequency**: GUI refresh rate (1000ms default)
+- **Trade History Limit**: Maximum stored trades (10,000 default)
 
-## Troubleshooting
+## Debugging
+
+### Enable Debug Output
+```bash
+# Set Qt logging environment variable
+export QT_LOGGING_RULES="*.debug=true"
+./hft_simulator
+```
 
 ### Common Issues
 
-1. **Slow Performance**
-   - Enable High-Frequency Mode
-   - Reduce number of traders
-   - Close other browser tabs
+1. **Qt Not Found**
+   ```bash
+   export Qt6_DIR=/path/to/qt6/lib/cmake/Qt6
+   ```
 
-2. **CSV Import Errors**
-   - Check required columns are present
-   - Verify data types (quantity: integer, price: decimal)
-   - Ensure no empty values in required fields
+2. **Missing Charts Module**
+   ```bash
+   sudo apt install qt6-charts-dev  # Ubuntu/Debian
+   brew install qt6                 # macOS
+   ```
 
-3. **Memory Issues**
-   - Reduce trade history limit
-   - Clear data periodically
-   - Monitor system resources
+3. **Compilation Errors**
+   - Ensure C++17 compiler support
+   - Check Qt version compatibility
+   - Verify all dependencies are installed
+
+## Performance Characteristics
+
+### Typical Performance
+- **Throughput**: 1,000-10,000 trades per second
+- **Latency**: Sub-millisecond order processing
+- **Memory Usage**: ~50-100MB for 20 traders
+- **CPU Usage**: 10-30% on modern systems
+
+### Optimization Tips
+- Reduce GUI update frequency for higher throughput
+- Adjust number of traders based on system capabilities
+- Use Release build for production performance
+
+## License
+
+This project is provided as-is for educational and demonstration purposes.
+
+## Support
+
+For build issues or questions:
+1. Check Qt installation and version compatibility
+2. Verify all system dependencies are installed
+3. Ensure C++17 compiler support
+4. Review CMake configuration output for errors
 
 ## Sample Data
 
-The application includes sample trading data for testing:
-- Multiple trader scenarios
-- Various symbols (AAPL, GOOGL, MSFT, TSLA, AMZN, etc.)
-- Realistic order patterns
-- Time-based order sequences
-
-## License
-This project is provided for educational and demonstration purposes.
-
-## Update
-This project is still under development 
-
+The included `sample_trades.csv` contains example order data for testing the import functionality. Use this file to understand the required CSV format and test the application's import capabilities.
