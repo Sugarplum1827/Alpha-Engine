@@ -340,8 +340,6 @@ void MainWindow::startSimulation() {
     
     setSimulationStatus(true);
     statusBar()->showMessage("Simulation running...");
-    statusBar()->showMessage("Simulation stopped");
-    statusBar()->showMessage("All data cleared");
 
     
     // Start update timer
@@ -363,7 +361,7 @@ void MainWindow::stopSimulation() {
     engine->stop();
     
     setSimulationStatus(false);
-    statusBar->showMessage("Simulation stopped");
+    statusBar()->showMessage("Simulation stopped");
     
     // Final update
     updateDisplay();
@@ -534,7 +532,7 @@ void MainWindow::clearAllData() {
         activeOrdersLabel->setText("0");
         performanceBar->setValue(0);
         
-        statusBar->showMessage("All data cleared");
+        statusBar()->showMessage("All data cleared");
     }
 }
 
