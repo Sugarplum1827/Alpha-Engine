@@ -84,7 +84,7 @@ void MainWindow::setupUI() {
 
 void MainWindow::setupMenus() {
     // File menu
-    QMenu* fileMenu = menuBar()->addMenu("&File");
+    fileMenu = menuBar()->addMenu("&File");
     
     importCsvButton = new QPushButton("Import CSV Orders");
     QAction* importAction = new QAction("&Import CSV Orders", this);
@@ -127,8 +127,8 @@ void MainWindow::setupMenus() {
     helpMenu->addAction(aboutAction);
     
     // Status bar
-    statusBar = this->statusBar();
-    statusBar->showMessage("Ready");
+    statusBarPtr = this->statusBar();
+    statusBarPtr->showMessage("Ready");
 }
 
 void MainWindow::setupConnections() {

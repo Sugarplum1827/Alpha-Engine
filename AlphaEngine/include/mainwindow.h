@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <vector>
 #include "engine.h"
 #include "trader.h"
 #include "csvexporter.h"
@@ -112,7 +113,7 @@ private slots:
 private:
     // Core components
     std::unique_ptr<TradingEngine> engine;
-    QVector<std::unique_ptr<Trader>> traders;
+    std::vector<std::unique_ptr<Trader>> traders;
     std::unique_ptr<CSVExporter> csvExporter;
     
     // GUI components
@@ -155,8 +156,8 @@ private:
     QTableWidget* traderPnlTable;
     
     // Menu and toolbar
-    QMenu* fileMenu = this->menuBar()->addMenu("&File");
-    QStatusBar* statusBar;
+    QMenu* fileMenu;
+    QStatusBar* statusBarPtr;  
     QAction* exportTradesAction;
     QAction* exportOrderBookAction;
     QAction* aboutAction;
