@@ -339,7 +339,10 @@ void MainWindow::startSimulation() {
     }
     
     setSimulationStatus(true);
-    statusBar->showMessage("Simulation running...");
+    statusBar()->showMessage("Simulation running...");
+    statusBar()->showMessage("Simulation stopped");
+    statusBar()->showMessage("All data cleared");
+
     
     // Start update timer
     updateTimer->start();
@@ -631,7 +634,7 @@ void MainWindow::updateTradeLogDisplay() {
 }
 
 void MainWindow::updateTraderPnlDisplay() {
-    if (traders.isEmpty()) {
+    if (traders.empty()) {
         traderPnlTable->setRowCount(0);
         return;
     }
