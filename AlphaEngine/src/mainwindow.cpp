@@ -7,6 +7,7 @@
 #include <QHeaderView>
 #include <QDateTime>
 #include <QDir>
+#include <QScreen>
 #include <algorithm>
 
 MainWindow::MainWindow(QWidget* parent)

@@ -101,10 +101,6 @@ public:
      * @brief Get detailed statistics for a symbol
      */
     QMap<QString, QVariant> getSymbolStatistics(const QString& symbol) const;
-    
-    /**
-     * @brief Clear all data (orders, trades, order books)
-     */
     void clear();
 
 signals:
@@ -142,7 +138,7 @@ private:
     
     // Order processing
     QQueue<OrderPtr> orderQueue;
-    QMutex orderQueueMutex;
+    mutable QMutex orderQueueMutex;
     
     // Trade execution tracking
     QVector<Trade> tradeHistory;
