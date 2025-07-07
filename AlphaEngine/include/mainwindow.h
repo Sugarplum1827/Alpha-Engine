@@ -156,7 +156,6 @@ private:
     
     // Menu and toolbar
     QMenu* fileMenu = this->menuBar()->addMenu("&File");
-    statusBar = this->statusBar();  // okay if `statusBar` is not a member
     QStatusBar* statusBar;
     QAction* exportTradesAction;
     QAction* exportOrderBookAction;
