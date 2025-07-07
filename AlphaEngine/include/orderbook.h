@@ -193,7 +193,6 @@ private:
     OrderBookSide asks;    // Sell orders
     QVector<Trade> tradeHistory;
     mutable QMutex mutex;
-    QMutex& getMutex() const { return const_cast<QMutex&>(mutex); }
     
     static constexpr int MAX_TRADE_HISTORY = 1000;
 };
