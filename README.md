@@ -60,7 +60,7 @@ Download and install:
 
 ### 1. Clone and Navigate
 ```bash
-cd cpp_hft
+cd Alpha-Engine
 ```
 
 ### 2. Create Build Directory
