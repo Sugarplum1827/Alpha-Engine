@@ -192,7 +192,7 @@ private:
     OrderBookSide bids;    // Buy orders
     OrderBookSide asks;    // Sell orders
     QVector<Trade> tradeHistory;
-    mutable QMutex mutex;
+    QMutex mutex;
     
     static constexpr int MAX_TRADE_HISTORY = 1000;
 };
