@@ -228,7 +228,7 @@ void OrderBook::addTrade(const Trade& trade) {
 }
 
 QVector<Trade> OrderBook::getRecentTrades(int count) const {
-    QMutexLocker locker(&mutex);
+    QMutexLocker locker(&getMutex());
     
     if (count <= 0 || tradeHistory.isEmpty()) {
         return tradeHistory;
