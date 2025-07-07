@@ -60,7 +60,7 @@ Download and install:
 
 ### 1. Clone and Navigate
 ```bash
-cd Alpha-Engine
+cd AlphaEngine
 ```
 
 ### 2. Create Build Directory
