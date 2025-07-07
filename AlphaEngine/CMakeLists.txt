@@ -38,7 +38,12 @@ set(HEADERS
 qt6_add_executable(hft_simulator ${SOURCES} ${HEADERS})
 
 # Link Qt6 libraries
-target_link_libraries(hft_simulator Qt6::Core Qt6::Widgets Qt6::Charts)
+target_link_libraries(hft_simulator
+    PRIVATE
+        Qt6::Core
+        Qt6::Widgets
+        Qt6::Charts
+)
 
 # Copy sample data file
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/sample_trades.csv

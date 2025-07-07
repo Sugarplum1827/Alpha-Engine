@@ -130,7 +130,8 @@ private:
     /**
      * @brief Estimate current market price based on recent trades and order book
      */
-    double estimateMarketPrice(const QString& symbol);
+    double estimateMarketPrice(const QString& symbol) const;
+
     
     /**
      * @brief Decide whether to buy or sell based on current position and market conditions

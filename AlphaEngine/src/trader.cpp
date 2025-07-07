@@ -199,13 +199,8 @@ void Trader::generateOrder() {
     tradingTimer->start(nextDelay);
 }
 
-double Trader::estimateMarketPrice(const QString& symbol) const {
-    // This method would normally query the engine for recent trades and order book
-    // For simplicity, we'll use a basic random walk model
-    
+double Trader::estimateMarketPrice(const QString& symbol) const {   
     double currentPrice = marketPriceCache.value(symbol, 100.0);
-    
-    // Random walk with small steps
     double change = (random->generateDouble() - 0.5) * 0.02; // ±1% change
     currentPrice *= (1 + change);
     currentPrice = qMax(1.0, currentPrice); // Minimum price of $1
